@@ -1,0 +1,5 @@
+# No AI attribution in commit messages (CLAUDE.md §3).
+if grep -qiE 'co-authored-by:.*(claude|anthropic)|generated with.*claude|noreply@anthropic\.com' "$1"; then
+  echo "commit-msg: remove the Claude / AI attribution line from the commit message (CLAUDE.md §3)." >&2
+  exit 1
+fi

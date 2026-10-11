@@ -1,0 +1,11 @@
+{
+  "extends": ["html-validate:standard"],
+  "rules": {
+    "no-inline-style": "off",
+    "attribute-boolean-style": "off",
+    "attribute-empty-style": "off",
+    "void-style": "off",
+    "attr-case": "off",
+    "valid-id": ["error", { "relaxed": true }]
+  }
+}

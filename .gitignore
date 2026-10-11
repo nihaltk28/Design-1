@@ -1,0 +1,62 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.pnpm-store/
+
+# Next.js build output
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# Storybook
+/storybook-static
+
+# bundle analyzer (ANALYZE=true pnpm build)
+/.next/analyze/
+
+# env files — keep secrets out of git; commit .env.example only
+.env
+.env*.local
+.env.development
+.env.production
+!.env.example
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# hosting / tooling
+.vercel
+.turbo
+.eslintcache
+.lighthouseci/
+
+# Sentry
+.sentryclirc
+
+# Claude Code — share settings.json, hooks and commands; keep personal overrides local
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.pem
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Storybook
+*storybook.log
