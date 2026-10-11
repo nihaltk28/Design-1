@@ -1,0 +1,62 @@
+/*
+ * Design tokens — Tailwind v4 @theme (CLAUDE.md §1, §3).
+ *
+ * ⚠ PLACEHOLDER VALUES. Every value below is a neutral stand-in so the scaffold builds and passes the
+ * contrast gate. Replace them with the design's tokens (Figma / brand guide) before page work; values
+ * estimated from screenshots get an "estimated from screenshot" comment (CLAUDE.md §7).
+ * Every colour pair the design uses becomes a row in styles/contrast.test.ts.
+ *
+ * Fluid sizes: generate clamp() values with `pnpm token:clamp <minPx> <maxPx> <minVw> <maxVw> --name=--token`.
+ */
+@theme {
+  /* Colours — placeholder */
+  --color-text: #1a1a1a;
+  --color-text-muted: #595959;
+  --color-surface: #ffffff;
+  --color-brand: #1d4e89;
+  --color-on-brand: #ffffff;
+  --color-focus-ring: #1d4e89;
+
+  /* Typography — placeholder family until lib/fonts.ts loads the brand font */
+  --font-brand: var(--font-brand-local, system-ui), system-ui, sans-serif;
+  --default-font-family: var(--font-brand);
+
+  /* Type scale (rem — follows styles/scaling.css) — placeholder */
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.35;
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 2.5rem;
+  --text-3xl--line-height: 1.2;
+
+  /* Spacing — Tailwind's 0.25rem step; named page-level tokens below */
+  --spacing: 0.25rem;
+  --spacing-section-y: 3rem;
+
+  /* Radii — placeholder */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+
+  /* Focus ring — one token set, consumed through the focus-ring utility (CLAUDE.md §4). px: hairline */
+  --focus-ring-width: 3px;
+  --focus-ring-offset: 2px;
+
+  /* Container — the only place the page width lives (CLAUDE.md §7) */
+  --container-max-w: 90rem;
+  --container-gutter: 1rem;
+}
+
+/* Visible keyboard focus. Use `focus-ring` on every interactive primitive — never outline-none. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}

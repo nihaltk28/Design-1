@@ -12,58 +12,58 @@ trigger: none
 pool: Default
 
 variables:
-  CI: 'true'
-  NEXT_TELEMETRY_DISABLED: '1'
-  NEXT_PUBLIC_USE_MOCKS: 'true'   # e2e runs a production build on MSW fixtures, so data is stable
-  PNPM_VERSION: '12'              # keep in step with package.json "packageManager"
-  NODE_VERSION: '24.x'            # keep in step with package.json "engines"
+  CI: "true"
+  NEXT_TELEMETRY_DISABLED: "1"
+  NEXT_PUBLIC_USE_MOCKS: "true" # e2e runs a production build on MSW fixtures, so data is stable
+  PNPM_VERSION: "12" # keep in step with package.json "packageManager"
+  NODE_VERSION: "22.x" # keep in step with package.json "engines"
 
 steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: '$(NODE_VERSION)'
-    displayName: 'Use Node.js'
+      versionSpec: "$(NODE_VERSION)"
+    displayName: "Use Node.js"
 
   # Install pnpm directly (corepack's shim has broken on this agent); temp caches avoid root-owned npm cache errors.
   - script: |
       npm install -g pnpm@$(PNPM_VERSION) --cache "$(Agent.TempDirectory)/npm-cache"
       node --version && pnpm --version
-    displayName: 'Install pnpm'
+    displayName: "Install pnpm"
 
   - script: pnpm install --frozen-lockfile --store-dir "$(Agent.TempDirectory)/pnpm-store"
-    displayName: 'Install dependencies'
+    displayName: "Install dependencies"
 
   - script: pnpm lint --max-warnings=0
-    displayName: 'Lint (project rules, jsx-a11y, RTL, tokens, no hardcoded text)'
+    displayName: "Lint (project rules, jsx-a11y, RTL, tokens, no hardcoded text)"
 
   - script: pnpm typecheck
-    displayName: 'Typecheck (incl. translation keys)'
+    displayName: "Typecheck (incl. translation keys)"
 
   - script: pnpm exec vitest run --reporter=default --reporter=junit --outputFile.junit=test-results/unit-junit.xml
-    displayName: 'Unit tests (messages parity, token contrast, lib/utils)'
+    displayName: "Unit tests (messages parity, token contrast, lib/utils)"
 
   - script: pnpm audit --prod --audit-level=high
-    displayName: 'Dependency audit (high and critical fail)'
+    displayName: "Dependency audit (high and critical fail)"
 
   # Browsers only, no --with-deps: that needs sudo. If Chromium fails to launch, install its OS deps on the agent once.
   - script: pnpm exec playwright install chromium
-    displayName: 'Install Playwright browser'
+    displayName: "Install Playwright browser"
 
   - script: pnpm test:e2e
-    displayName: 'E2E: every locale × 320/768/1440 — overflow + axe'
+    displayName: "E2E: every locale × 320/768/1440 — overflow + axe"
 
   - task: PublishTestResults@2
     condition: succeededOrFailed()
     inputs:
-      testResultsFormat: 'JUnit'
-      testResultsFiles: 'test-results/*-junit.xml'
+      testResultsFormat: "JUnit"
+      testResultsFiles: "test-results/*-junit.xml"
       mergeTestResults: true
-      testRunTitle: 'PR checks'
-    displayName: 'Publish test results'
+      testRunTitle: "PR checks"
+    displayName: "Publish test results"
 
   - task: PublishPipelineArtifact@1
     condition: failed()
     inputs:
-      targetPath: 'playwright-report'
-      artifact: 'playwright-report'
-    displayName: 'Upload Playwright report (on failure)'
+      targetPath: "playwright-report"
+      artifact: "playwright-report"
+    displayName: "Upload Playwright report (on failure)"

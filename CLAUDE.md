@@ -1,35 +1,32 @@
-# {{PROJECT_NAME}} — frontend
-
-> **Team template.** Run `/scaffold` in Claude Code to fill every `{{…}}`, create the project and delete this note. Until then, never assume a `{{…}}` value — ask.
+# Museum — frontend
 
 Rules Claude must follow in this repo. Rationale and onboarding: `docs/PROJECT-SETUP.md`. Incident history: `docs/known-issues.md`. Where they differ, this file wins.
 
 ## Project
 
-- **What:** {{ONE_LINE_DESCRIPTION}}
-- **Architecture:** this repo is the **frontend only** — Next.js → {{BACKEND}} API ({{API_STYLE}}). We consume the API; we don't own it. Backend owner: {{BACKEND_OWNER}}.
-- **Audience:** {{AUDIENCE}} <!-- public site | logged-in portal | both -->
-- **Languages:** {{LOCALES}} (default `{{DEFAULT_LOCALE}}`)
-- **Design source:** {{DESIGN_SOURCE}} <!-- Figma link | existing HTML | screenshots only | a mix -->
-- **Acceptance bar:** WCAG 2.2 AA{{MADA}}, the §5 performance targets{{SEO_PARITY}}. <!-- MADA: " + Mada certification" for Qatar government; SEO_PARITY: ", SEO parity with the old site" when replacing a site -->
+- **What:** Bilingual public website and visitor portal
+- **Architecture:** this repo is the **frontend only** — Next.js → .NET (ASP.NET Core) API (REST/JSON). We consume the API; we don't own it. Backend owner: TBD.
+- **Audience:** both — public site plus a logged-in visitor portal. Login is not built yet; it waits on the auth decision (§10)
+- **Languages:** `en`, `ar` (default `en`)
+- **Design source:** a mix — Figma, existing HTML and screenshots (§7 covers each)
+- **Acceptance bar:** WCAG 2.2 AA + Mada certification, the §5 performance targets, SEO parity with the old site.
 
 ## 1. Stack & structure — locked, don't relitigate
 
 - Next.js 16 (App Router) · React 19 · TypeScript (strict) · pnpm
 - **Tailwind CSS v4 only — no Bootstrap.** Design tokens in `styles/tokens.css` via `@theme`
-- i18n: `next-intl`, routes under `app/[locale]/...`. (Single-language project: no `[locale]` segment and no next-intl — decided at scaffold.)
-- API: typed client in `lib/api`. Types from **{{TYPES_SOURCE}}** (see `PROJECT-SETUP.md` §4). Runtime validation: Zod. Mocks: MSW v2, toggled by `NEXT_PUBLIC_USE_MOCKS`
+- i18n: `next-intl`, routes under `app/[locale]/...`.
+- API: typed client in `lib/api`. Types from **the .NET OpenAPI/Swagger spec → `openapi-typescript` → `lib/api/generated.ts`** (`pnpm gen:types`; spec URL not available yet) (see `PROJECT-SETUP.md` §4). Runtime validation: Zod. Mocks: MSW v2, toggled by `NEXT_PUBLIC_USE_MOCKS`
 - URL state (filters, search, pagination): `nuqs`. TanStack Query only for logged-in, client-interactive surfaces (§2)
-- Forms: React Hook Form + Zod resolver, submitted via {{FORM_SUBMIT}} <!-- Server Actions | route handlers — one choice for the whole project -->
+- Forms: React Hook Form + Zod resolver, submitted via Server Actions
 - Request interception: **`proxy.ts`** (Next 16 name; `middleware.ts` is deprecated)
-- Error monitoring: {{MONITORING}} <!-- e.g. Sentry, or "none — console.error in error boundaries" -->
+- Error monitoring: none — `console.error` in error boundaries and `instrumentation.ts`
 - Import aliases: `@/components/*`, `@/lib/*`, `@/styles/*`
 
 ### Folder structure — put new files here
 
 ```
 app/[locale]/(public)/...    # public routes — layout sets lang + dir, skip link
-app/[locale]/(app)/...       # logged-in routes, if any
 app/api/revalidate/          # protected webhook → revalidateTag() (only if the backend can call it)
 app/sitemap.ts · robots.ts   # public sites: generated from live API data
 proxy.ts                     # locale negotiation, auth redirects, security headers
@@ -42,15 +39,13 @@ components/templates/        # page templates, 1:1 with the API's content types
 lib/api/                     # client.ts (getPublic / getPrivate) + generated types (never hand-edit)
 lib/schemas/                 # Zod schemas validating API responses at the boundary
 lib/mocks/                   # MSW handlers + fixtures/ — ALL mock data, nowhere else
-lib/content/                 # rehype pipeline for CMS rich-text HTML (only if the API returns HTML)
-lib/auth/                    # session helpers (only if there's login)
 lib/security/                # secretMatches (constant-time), rateLimit + clientIp — server-only
 lib/seo/                     # metadata builders + JSON-LD component
 lib/i18n/                    # next-intl config + routing
 lib/utils/                   # dates, numbers, slugs, DTO → view-model mappers — Vitest targets
 lib/fonts.ts                 # next/font/local setup
 
-messages/{{LOCALE_FILES}}    # translations — every key in every locale
+messages/en.json · ar.json   # translations — every key in every locale
 styles/tokens.css            # Tailwind v4 @theme — design tokens from Figma
 public/assets/ · fonts/      # downloaded design assets, subsetted woff2
 tests/e2e/                   # Playwright specs (every locale, redirects, axe)
@@ -73,7 +68,7 @@ docs/design/                 # screenshots, when there's no Figma (§7 Screensho
 - Independent fetches run in parallel (`Promise.all`). Dedupe calls repeated in `generateMetadata` and the page with React `cache()`.
 - Every API call has a timeout and an error/empty fallback — one slow endpoint must not hang the page.
 - Static rendering only for pages with no API data (privacy, terms). `force-dynamic` is never applied globally.
-- Content refresh: {{REFRESH_STRATEGY}} <!-- "backend webhook → /api/revalidate by tag" | "time-based revalidate only" -->
+- Content refresh: backend webhook → `/api/revalidate` by tag, with each response's time limit as the fallback
 
 ### Route table — fill as pages are planned; Claude builds each route to its row
 
@@ -93,7 +88,7 @@ Modes: **SSR** (default) · **SSR + client** (logged-in, interactive) · **Stati
 
 - ⚙ Never import `@/lib/mocks/*` from `components/` or `app/`. Fixtures reach the UI only through MSW.
 - ⚙ Components never call `fetch`. Use `getPublic` / `getPrivate` from `@/lib/api`.
-- ⚙ No `dangerouslySetInnerHTML`. CMS rich-text goes through the rehype pipeline in `lib/content`. Only exception: the JSON-LD component in `lib/seo`.
+- ⚙ No `dangerouslySetInnerHTML`. The API returns no rich-text HTML; if that changes, add a rehype pipeline in `lib/content` (`PROJECT-SETUP.md` §5.4). Only exception: the JSON-LD component in `lib/seo`.
 - ⚙ No hardcoded container widths (`max-w-[1440px]`). Use `<Container>` or `CONTAINER_CLASSNAME`.
 - ⚙ Every file in `lib/api/` and `lib/auth/` starts with `import "server-only"`, so importing it into client code fails the build.
 - Never hand-edit generated API types — regenerate with `pnpm gen:types`.
@@ -109,7 +104,7 @@ Modes: **SSR** (default) · **SSR + client** (logged-in, interactive) · **Stati
 
 ## 4. Accessibility — a per-PR gate, not a pre-launch phase
 
-Target: **WCAG 2.2 AA**{{MADA_A11Y}}. An automated-clean report catches roughly a third of issues — it is not sign-off. <!-- MADA_A11Y: " + Mada Center certification — budget a real Mada audit before launch" -->
+Target: **WCAG 2.2 AA + Mada Center certification — budget a real Mada audit before launch**. An automated-clean report catches roughly a third of issues — it is not sign-off.
 
 - Semantics: landmarks, one `<h1>` per page, no skipped heading levels, `<button>`/`<a>` — never `<div onClick>`.
 - Any change to `components/sections` or `components/templates`: Tab / Shift+Tab through everything it touches before calling it done.
@@ -171,7 +166,7 @@ The backend owns authorisation, but our server and pages are attack surface too.
 - Route handlers that accept cookie-authenticated writes check the `Origin` header (Server Actions do this automatically).
 - Public forms (contact, login, sign-up, password reset) get abuse protection: `rateLimit()` per IP (`lib/security/rate-limit.ts`) plus a honeypot field, and a captcha only if that isn't enough.
 - Captcha, when needed: one with **no visual challenge** — reCAPTCHA v3, Cloudflare Turnstile or similar — never image puzzles, which fail WCAG and Mada (§4). The token is **verified on the server** inside the action, with the provider's secret key; a low score falls back to the honeypot + rate limit, never to a puzzle. The token format is agreed with the backend before building.
-- Errors shown to users are generic; details go to {{MONITORING}}. Never render a stack trace, SQL or raw backend message. Login and reset errors never reveal whether an account exists.
+- Errors shown to users are generic; details go to the server logs. Never render a stack trace, SQL or raw backend message. Login and reset errors never reveal whether an account exists.
 - File uploads: allowlist of types and a max size, checked on the server (not just `accept=`). Never serve an upload back from our own origin as-is.
 - Every Server Action and write route handler gets a test that calls it **logged out** and **with invalid input** and expects a refusal — written with the action, not later.
 
@@ -184,14 +179,6 @@ The backend owns authorisation, but our server and pages are attack surface too.
 
 - `rateLimit()` is **in-memory, per instance**. Fine on one server or container. On several containers or serverless instances each keeps its own count — use the CDN / WAF's rate limiting, or back `rateLimit()` with a shared store (Redis, a KV). Record the choice in §10 (hosting).
 - `clientIp()` trusts `X-Forwarded-For`, which is only safe when the platform / CDN overwrites it.
-
-### Login & sessions (only if there's login)
-
-- Session in an httpOnly + `Secure` + `SameSite` cookie set by the server. Never tokens in `localStorage`, `sessionStorage` or `NEXT_PUBLIC_*`.
-- `proxy.ts` redirects logged-out users, but every private page and action still checks the session itself — the proxy is not the only guard.
-- Redirect targets (`?next=`, `returnUrl`) must be relative paths on our own site; reject anything else.
-- Never decide ownership from an ID in the URL or form. The backend must enforce it — raise any endpoint that doesn't with the backend owner.
-- Logout clears the cookie server-side and ends the session with the backend.
 
 ### Every page
 
@@ -291,7 +278,7 @@ One line per open issue: what to avoid, and when it can be lifted. Remove the li
 
 - [ ] Supported browser matrix
 - [ ] Hosting target (Node server / container / platform) and who owns the pipeline — and whether it runs one instance or several, which decides how rate limiting works (§6)
-- [ ] Auth method and session storage (if there's login)
+- [ ] Auth method and session storage for the visitor portal — when decided, add `app/[locale]/(app)/`, `lib/auth/` and the Login & sessions rules (`PROJECT-SETUP.md` §4, §11)
 - [ ] Preview / draft-content workflow needed?
 - [ ] Site search scope
 - [ ] Numerals and calendar per locale (e.g. Western vs Eastern Arabic numerals, Gregorian vs Hijri)
@@ -302,7 +289,7 @@ Move an item into the relevant rule section once it's decided.
 
 ## 11. Status & TODO
 
-Built: nothing yet. The `app/` directory is the source of truth for what exists.
+Built: scaffold only (2026-10-11). The `app/` directory is the source of truth for what exists.
 
 Not in place yet — don't assume these run:
 

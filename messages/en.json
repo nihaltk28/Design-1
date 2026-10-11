@@ -1,0 +1,22 @@
+{
+  "Layout": {
+    "skipToContent": "Skip to main content"
+  },
+  "Metadata": {
+    "siteName": "Museum",
+    "description": "Bilingual public website and visitor portal"
+  },
+  "Home": {
+    "fallbackTitle": "Welcome"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you are looking for doesn't exist or has moved.",
+    "home": "Go to the home page"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "body": "We couldn't load this page. Please try again.",
+    "retry": "Try again"
+  }
+}

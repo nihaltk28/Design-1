@@ -1,0 +1,10 @@
+saveExact: true
+
+allowBuilds:
+  "@parcel/watcher": false
+  "@swc/core": false
+  core-js-pure: false
+  esbuild: false
+  msw: false
+  sharp: false
+  unrs-resolver: false
