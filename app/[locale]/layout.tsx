@@ -5,7 +5,7 @@ import { RouteAnnouncer } from "@/components/ui/RouteAnnouncer";
 import { fontVariables } from "@/lib/fonts";
 import { resolveLocale } from "@/lib/i18n/locale";
 import { directionOf, routing } from "@/lib/i18n/routing";
-import { isProductionSite } from "@/lib/seo/site";
+import { isProductionSite, siteUrl } from "@/lib/seo/site";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -18,6 +18,9 @@ export async function generateMetadata({
   const locale = resolveLocale((await params).locale);
   const t = await getTranslations({ locale, namespace: "Metadata" });
   return {
+    // Set here, not only per page: file-based metadata images (opengraph-image) resolve their absolute URL
+    // against the layout's metadataBase.
+    metadataBase: new URL(siteUrl()),
     title: { default: t("siteName"), template: `%s | ${t("siteName")}` },
     description: t("description"),
     robots: isProductionSite() ? undefined : { index: false, follow: false },
@@ -41,7 +44,7 @@ export default async function LocaleLayout({
       <body>
         <a
           href="#main"
-          className="sr-only focus-ring focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-on-brand"
+          className="focus:bg-brand focus:text-on-brand sr-only focus-ring focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-50 focus:rounded-md focus:px-4 focus:py-2"
         >
           {t("skipToContent")}
         </a>
