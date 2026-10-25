@@ -1,0 +1,850 @@
+{
+  "en": {
+    "seo": {
+      "title": "Event Horizon — Museum of Space and Time",
+      "description": "Seven galleries, a planetarium and a working observatory that take you from the Big Bang to the edge of a black hole."
+    },
+    "hero": {
+      "eyebrow": "Museum of space and time",
+      "title": "Explore. Wonder.\nStay [Curious].",
+      "text": "Seven galleries, a planetarium and a working observatory that take you from the Big Bang to the edge of a black hole — and safely back home again.",
+      "primary": {
+        "label": "Explore exhibitions",
+        "href": "/exhibitions"
+      },
+      "secondary": {
+        "label": "Plan your visit",
+        "href": "/visit"
+      }
+    },
+    "galleries": {
+      "eyebrow": "Seven galleries, one universe",
+      "cards": [
+        {
+          "id": "origins",
+          "title": "Begin.",
+          "visual": "bars",
+          "link": {
+            "label": "Origins",
+            "href": "/exhibitions/galleries/origins"
+          }
+        },
+        {
+          "id": "stars",
+          "title": "Shine.",
+          "visual": "spectrum",
+          "link": {
+            "label": "Stars",
+            "href": "/exhibitions/galleries/stars"
+          }
+        },
+        {
+          "id": "planets",
+          "title": "Orbit.",
+          "visual": "orbit",
+          "link": {
+            "label": "Planets",
+            "href": "/exhibitions/galleries/planets"
+          }
+        },
+        {
+          "id": "black-holes",
+          "title": "Collapse.",
+          "visual": "rings",
+          "link": {
+            "label": "Black holes",
+            "href": "/exhibitions/galleries/black-holes"
+          }
+        }
+      ],
+      "tagline": "Fourteen billion years of the universe. One unforgettable afternoon."
+    },
+    "journey": {
+      "eyebrow": "The museum in one timeline",
+      "title": "Seven stops from the first light\n— to you",
+      "text": "Follow the universe from its first instant to the telescopes that read its story — and see where each stop lives in the museum.",
+      "places": [
+        {
+          "id": "origins",
+          "label": "Origins",
+          "icon": "gallery",
+          "href": "/exhibitions/galleries/origins"
+        },
+        {
+          "id": "stars",
+          "label": "Stars",
+          "icon": "star",
+          "href": "/exhibitions/galleries/stars"
+        },
+        {
+          "id": "planetarium",
+          "label": "Planetarium",
+          "icon": "planetarium",
+          "href": "/exhibitions/planetarium"
+        },
+        {
+          "id": "observatory",
+          "label": "Observatory",
+          "icon": "observatory",
+          "href": "/visit/observatory"
+        },
+        {
+          "id": "lab",
+          "label": "Lab",
+          "icon": "lab",
+          "href": "/learn/lab"
+        },
+        {
+          "id": "library",
+          "label": "Library",
+          "icon": "library",
+          "href": "/learn/library"
+        }
+      ],
+      "steps": [
+        {
+          "id": "big-bang",
+          "icon": "bang",
+          "title": "The Big Bang",
+          "text": "13.8 billion years ago, space, time and matter begin together in one hot, dense instant.",
+          "above": [],
+          "below": ["planetarium", "origins"]
+        },
+        {
+          "id": "first-stars",
+          "icon": "stars",
+          "title": "The first stars",
+          "text": "Clouds of hydrogen collapse and ignite — and forge the first heavy elements, the ones we're made of.",
+          "above": ["stars"],
+          "below": []
+        },
+        {
+          "id": "galaxies",
+          "icon": "galaxy",
+          "title": "Galaxies gather",
+          "text": "Gravity pulls stars into vast spinning cities: our Milky Way is one of hundreds of billions.",
+          "above": [],
+          "below": ["planetarium", "observatory"]
+        },
+        {
+          "id": "sun",
+          "icon": "sun",
+          "title": "The Sun ignites",
+          "text": "4.6 billion years ago a quiet cloud collapses, and a modest yellow star switches on.",
+          "above": ["stars", "lab"],
+          "below": []
+        },
+        {
+          "id": "earth",
+          "icon": "earth",
+          "title": "Earth takes shape",
+          "text": "Dust and rock collide into a molten world that cools, and gathers oceans and air.",
+          "above": [],
+          "below": ["lab"]
+        },
+        {
+          "id": "life",
+          "icon": "life",
+          "title": "Life begins",
+          "text": "Simple cells appear in the oceans — and over billions of years they change the planet itself.",
+          "above": ["library"],
+          "below": []
+        },
+        {
+          "id": "looking-back",
+          "icon": "telescope",
+          "title": "Looking back",
+          "text": "Today we build telescopes to read that whole story, in light that left its stars long ago.",
+          "above": [],
+          "below": ["observatory", "library"]
+        }
+      ]
+    },
+    "dome": {
+      "eyebrow": "One dome, the whole sky",
+      "title": "Every era of\nthe universe, [gathered]\n[under one dome.]",
+      "text": "Our 24-metre planetarium projects the whole night sky — and every era of the universe — above your head. Lie back and travel from the Big Bang to the edge of a black hole."
+    },
+    "exhibits": {
+      "eyebrow": "Six objects. One story.",
+      "title": "The Collection",
+      "text": "Start with any one — they all lead back to the beginning",
+      "items": [
+        {
+          "id": "meteorite",
+          "icon": "meteorite",
+          "name": "Meteorite",
+          "text": "Older than the Earth itself",
+          "link": {
+            "label": "Touch the stone",
+            "href": "/exhibitions/collection/meteorite"
+          }
+        },
+        {
+          "id": "moon-rock",
+          "icon": "moon",
+          "name": "Moon rock",
+          "text": "Carried home in 1972",
+          "link": {
+            "label": "Hold the Moon",
+            "href": "/exhibitions/collection/moon-rock"
+          }
+        },
+        {
+          "id": "capsule",
+          "icon": "capsule",
+          "name": "Capsule",
+          "text": "Flown, scorched and returned",
+          "link": {
+            "label": "Step inside",
+            "href": "/exhibitions/collection/capsule"
+          }
+        },
+        {
+          "id": "satellite",
+          "icon": "satellite",
+          "name": "Satellite",
+          "text": "The first voice from orbit",
+          "link": {
+            "label": "Hear its signal",
+            "href": "/exhibitions/collection/satellite"
+          }
+        },
+        {
+          "id": "radio-dish",
+          "icon": "dish",
+          "name": "Radio dish",
+          "text": "Listening to the sky since 1962",
+          "link": {
+            "label": "Tune in",
+            "href": "/exhibitions/collection/radio-dish"
+          }
+        },
+        {
+          "id": "atomic-clock",
+          "icon": "clock",
+          "name": "Atomic clock",
+          "text": "Keeps time to a billionth of a second",
+          "link": {
+            "label": "Watch it tick",
+            "href": "/exhibitions/collection/atomic-clock"
+          }
+        }
+      ]
+    },
+    "compare": {
+      "eyebrow": "Compare tickets",
+      "title": "One membership.\n[The whole universe.]",
+      "corner": "Ticket",
+      "columns": [
+        {
+          "id": "member",
+          "label": "Membership"
+        },
+        {
+          "id": "day",
+          "label": "Day ticket"
+        },
+        {
+          "id": "show",
+          "label": "Show only"
+        }
+      ],
+      "rows": [
+        {
+          "id": "galleries",
+          "label": "Galleries",
+          "cells": [
+            {
+              "text": "All seven"
+            },
+            {
+              "text": "All seven"
+            },
+            {
+              "text": "Lobby only"
+            }
+          ]
+        },
+        {
+          "id": "price",
+          "label": "Price",
+          "cells": [
+            {
+              "text": "from QAR 90",
+              "large": true
+            },
+            {
+              "text": "QAR 60 / visit"
+            },
+            {
+              "text": "QAR 40 / show"
+            }
+          ]
+        },
+        {
+          "id": "booking",
+          "label": "Booking",
+          "cells": [
+            {
+              "text": "Any time"
+            },
+            {
+              "text": "Same day"
+            },
+            {
+              "text": "Per show"
+            }
+          ]
+        },
+        {
+          "id": "planetarium",
+          "label": "Planetarium shows",
+          "cells": [
+            {
+              "mark": "yes"
+            },
+            {
+              "mark": "partial"
+            },
+            {
+              "mark": "yes"
+            }
+          ]
+        },
+        {
+          "id": "observatory",
+          "label": "Observatory nights",
+          "cells": [
+            {
+              "mark": "yes"
+            },
+            {
+              "mark": "no"
+            },
+            {
+              "mark": "no"
+            }
+          ]
+        },
+        {
+          "id": "guests",
+          "label": "Guest passes",
+          "cells": [
+            {
+              "mark": "yes"
+            },
+            {
+              "mark": "no"
+            },
+            {
+              "mark": "no"
+            }
+          ]
+        }
+      ]
+    },
+    "explore": {
+      "eyebrow": "Explore the museum",
+      "links": [
+        {
+          "id": "galleries",
+          "title": "Galleries",
+          "text": "Seven halls",
+          "href": "/exhibitions/galleries"
+        },
+        {
+          "id": "planetarium",
+          "title": "Planetarium",
+          "text": "Shows tonight",
+          "href": "/exhibitions/planetarium"
+        },
+        {
+          "id": "observatory",
+          "title": "Observatory",
+          "text": "Night viewing",
+          "href": "/visit/observatory"
+        },
+        {
+          "id": "visit",
+          "title": "Visit",
+          "text": "Tickets & hours",
+          "href": "/visit"
+        },
+        {
+          "id": "learn",
+          "title": "Learn",
+          "text": "Schools & talks",
+          "href": "/learn"
+        },
+        {
+          "id": "membership",
+          "title": "Membership",
+          "text": "Join the crew",
+          "href": "/membership"
+        }
+      ]
+    },
+    "stages": [
+      {
+        "id": "start",
+        "label": "Start",
+        "name": "Stay curious"
+      },
+      {
+        "id": "galleries",
+        "label": "Galleries",
+        "name": "Seven galleries"
+      },
+      {
+        "id": "journey",
+        "label": "Journey",
+        "name": "Big Bang to now"
+      },
+      {
+        "id": "planetarium",
+        "label": "Planetarium",
+        "name": "Under the dome"
+      },
+      {
+        "id": "exhibits",
+        "label": "Exhibits",
+        "name": "Featured objects"
+      },
+      {
+        "id": "visit",
+        "label": "Visit",
+        "name": "Plan your day"
+      },
+      {
+        "id": "explore",
+        "label": "Explore",
+        "name": "Keep exploring"
+      }
+    ]
+  },
+  "ar": {
+    "seo": {
+      "title": "أفق الحدث — متحف الفضاء والزمن",
+      "description": "سبع قاعات وقبة سماوية ومرصد عامل تأخذك من الانفجار العظيم إلى حافة ثقب أسود."
+    },
+    "hero": {
+      "eyebrow": "متحف الفضاء والزمن",
+      "title": "استكشف. تأمّل.\nوابقَ [فضوليًا].",
+      "text": "سبع قاعات وقبة سماوية ومرصد عامل تأخذك من الانفجار العظيم إلى حافة ثقب أسود — ثم تعود إلى بيتك بأمان.",
+      "primary": {
+        "label": "استكشف المعارض",
+        "href": "/exhibitions"
+      },
+      "secondary": {
+        "label": "خطّط لزيارتك",
+        "href": "/visit"
+      }
+    },
+    "galleries": {
+      "eyebrow": "سبع قاعات، كونٌ واحد",
+      "cards": [
+        {
+          "id": "origins",
+          "title": "ابدأ.",
+          "visual": "bars",
+          "link": {
+            "label": "النشأة",
+            "href": "/exhibitions/galleries/origins"
+          }
+        },
+        {
+          "id": "stars",
+          "title": "تألّق.",
+          "visual": "spectrum",
+          "link": {
+            "label": "النجوم",
+            "href": "/exhibitions/galleries/stars"
+          }
+        },
+        {
+          "id": "planets",
+          "title": "دُر.",
+          "visual": "orbit",
+          "link": {
+            "label": "الكواكب",
+            "href": "/exhibitions/galleries/planets"
+          }
+        },
+        {
+          "id": "black-holes",
+          "title": "انهَر.",
+          "visual": "rings",
+          "link": {
+            "label": "الثقوب السوداء",
+            "href": "/exhibitions/galleries/black-holes"
+          }
+        }
+      ],
+      "tagline": "أربعة عشر مليار سنة من عمر الكون. في ظهيرة واحدة لا تُنسى."
+    },
+    "journey": {
+      "eyebrow": "المتحف في خطّ زمني واحد",
+      "title": "سبع محطات من الضوء الأول\n— حتى أنت",
+      "text": "تابع الكون من لحظته الأولى حتى التلسكوبات التي تقرأ قصته — واكتشف أين تجد كل محطة في المتحف.",
+      "places": [
+        {
+          "id": "origins",
+          "label": "النشأة",
+          "icon": "gallery",
+          "href": "/exhibitions/galleries/origins"
+        },
+        {
+          "id": "stars",
+          "label": "النجوم",
+          "icon": "star",
+          "href": "/exhibitions/galleries/stars"
+        },
+        {
+          "id": "planetarium",
+          "label": "القبة السماوية",
+          "icon": "planetarium",
+          "href": "/exhibitions/planetarium"
+        },
+        {
+          "id": "observatory",
+          "label": "المرصد",
+          "icon": "observatory",
+          "href": "/visit/observatory"
+        },
+        {
+          "id": "lab",
+          "label": "المختبر",
+          "icon": "lab",
+          "href": "/learn/lab"
+        },
+        {
+          "id": "library",
+          "label": "المكتبة",
+          "icon": "library",
+          "href": "/learn/library"
+        }
+      ],
+      "steps": [
+        {
+          "id": "big-bang",
+          "icon": "bang",
+          "title": "الانفجار العظيم",
+          "text": "قبل 13.8 مليار سنة، بدأ الفضاء والزمن والمادة معًا في لحظة واحدة شديدة الحرارة والكثافة.",
+          "above": [],
+          "below": ["planetarium", "origins"]
+        },
+        {
+          "id": "first-stars",
+          "icon": "stars",
+          "title": "النجوم الأولى",
+          "text": "سُحب الهيدروجين تنهار وتشتعل — وتصنع أولى العناصر الثقيلة، وهي ما صُنعنا منه.",
+          "above": ["stars"],
+          "below": []
+        },
+        {
+          "id": "galaxies",
+          "icon": "galaxy",
+          "title": "تجمّع المجرّات",
+          "text": "الجاذبية تجمع النجوم في مدن دوّارة هائلة، ومجرّة درب التبانة واحدة من مئات المليارات.",
+          "above": [],
+          "below": ["planetarium", "observatory"]
+        },
+        {
+          "id": "sun",
+          "icon": "sun",
+          "title": "اشتعال الشمس",
+          "text": "قبل 4.6 مليار سنة انهارت سحابة هادئة، فاشتعل نجم أصفر متواضع.",
+          "above": ["stars", "lab"],
+          "below": []
+        },
+        {
+          "id": "earth",
+          "icon": "earth",
+          "title": "تشكّل الأرض",
+          "text": "يتصادم الغبار والصخر في عالم منصهر يبرد، وتتجمّع فيه المحيطات والهواء.",
+          "above": [],
+          "below": ["lab"]
+        },
+        {
+          "id": "life",
+          "icon": "life",
+          "title": "بداية الحياة",
+          "text": "تظهر خلايا بسيطة في المحيطات — وعلى مدى مليارات السنين تغيّر الكوكب نفسه.",
+          "above": ["library"],
+          "below": []
+        },
+        {
+          "id": "looking-back",
+          "icon": "telescope",
+          "title": "النظر إلى الوراء",
+          "text": "اليوم نبني التلسكوبات لنقرأ القصة كلها، في ضوء غادر نجومه منذ زمن بعيد.",
+          "above": [],
+          "below": ["observatory", "library"]
+        }
+      ]
+    },
+    "dome": {
+      "eyebrow": "قبة واحدة، والسماء كلها",
+      "title": "كلّ عصور\nالكون، [مجتمعةً]\n[تحت قبة واحدة.]",
+      "text": "تعرض قبتنا السماوية بقطر 24 مترًا سماء الليل كاملة — وكلّ عصور الكون — فوق رأسك. استلقِ وسافر من الانفجار العظيم إلى حافة ثقب أسود."
+    },
+    "exhibits": {
+      "eyebrow": "ستّ قطع. قصة واحدة.",
+      "title": "المجموعة",
+      "text": "ابدأ بأيّ واحدة — كلّها تعود بك إلى البداية",
+      "items": [
+        {
+          "id": "meteorite",
+          "icon": "meteorite",
+          "name": "نيزك",
+          "text": "أقدم من الأرض نفسها",
+          "link": {
+            "label": "المس الحجر",
+            "href": "/exhibitions/collection/meteorite"
+          }
+        },
+        {
+          "id": "moon-rock",
+          "icon": "moon",
+          "name": "صخرة قمرية",
+          "text": "جُلبت إلى الأرض عام 1972",
+          "link": {
+            "label": "أمسك القمر",
+            "href": "/exhibitions/collection/moon-rock"
+          }
+        },
+        {
+          "id": "capsule",
+          "icon": "capsule",
+          "name": "كبسولة فضائية",
+          "text": "حلّقت واحترقت وعادت",
+          "link": {
+            "label": "ادخل إليها",
+            "href": "/exhibitions/collection/capsule"
+          }
+        },
+        {
+          "id": "satellite",
+          "icon": "satellite",
+          "name": "قمر صناعي",
+          "text": "أول صوت من المدار",
+          "link": {
+            "label": "استمع إلى إشارته",
+            "href": "/exhibitions/collection/satellite"
+          }
+        },
+        {
+          "id": "radio-dish",
+          "icon": "dish",
+          "name": "طبق راديوي",
+          "text": "يُصغي إلى السماء منذ 1962",
+          "link": {
+            "label": "اضبط الموجة",
+            "href": "/exhibitions/collection/radio-dish"
+          }
+        },
+        {
+          "id": "atomic-clock",
+          "icon": "clock",
+          "name": "ساعة ذرية",
+          "text": "تضبط الوقت بدقة جزء من مليار من الثانية",
+          "link": {
+            "label": "شاهدها تدقّ",
+            "href": "/exhibitions/collection/atomic-clock"
+          }
+        }
+      ]
+    },
+    "compare": {
+      "eyebrow": "قارن التذاكر",
+      "title": "عضوية واحدة.\n[الكون كلّه.]",
+      "corner": "التذكرة",
+      "columns": [
+        {
+          "id": "member",
+          "label": "العضوية"
+        },
+        {
+          "id": "day",
+          "label": "تذكرة يوم"
+        },
+        {
+          "id": "show",
+          "label": "العرض فقط"
+        }
+      ],
+      "rows": [
+        {
+          "id": "galleries",
+          "label": "القاعات",
+          "cells": [
+            {
+              "text": "السبع كلّها"
+            },
+            {
+              "text": "السبع كلّها"
+            },
+            {
+              "text": "البهو فقط"
+            }
+          ]
+        },
+        {
+          "id": "price",
+          "label": "السعر",
+          "cells": [
+            {
+              "text": "من 90 ر.ق",
+              "large": true
+            },
+            {
+              "text": "60 ر.ق / زيارة"
+            },
+            {
+              "text": "40 ر.ق / عرض"
+            }
+          ]
+        },
+        {
+          "id": "booking",
+          "label": "الحجز",
+          "cells": [
+            {
+              "text": "في أي وقت"
+            },
+            {
+              "text": "في اليوم نفسه"
+            },
+            {
+              "text": "لكل عرض"
+            }
+          ]
+        },
+        {
+          "id": "planetarium",
+          "label": "عروض القبة السماوية",
+          "cells": [
+            {
+              "mark": "yes"
+            },
+            {
+              "mark": "partial"
+            },
+            {
+              "mark": "yes"
+            }
+          ]
+        },
+        {
+          "id": "observatory",
+          "label": "ليالي المرصد",
+          "cells": [
+            {
+              "mark": "yes"
+            },
+            {
+              "mark": "no"
+            },
+            {
+              "mark": "no"
+            }
+          ]
+        },
+        {
+          "id": "guests",
+          "label": "تذاكر الضيوف",
+          "cells": [
+            {
+              "mark": "yes"
+            },
+            {
+              "mark": "no"
+            },
+            {
+              "mark": "no"
+            }
+          ]
+        }
+      ]
+    },
+    "explore": {
+      "eyebrow": "استكشف المتحف",
+      "links": [
+        {
+          "id": "galleries",
+          "title": "القاعات",
+          "text": "سبع قاعات",
+          "href": "/exhibitions/galleries"
+        },
+        {
+          "id": "planetarium",
+          "title": "القبة السماوية",
+          "text": "عروض الليلة",
+          "href": "/exhibitions/planetarium"
+        },
+        {
+          "id": "observatory",
+          "title": "المرصد",
+          "text": "رصد ليلي",
+          "href": "/visit/observatory"
+        },
+        {
+          "id": "visit",
+          "title": "الزيارة",
+          "text": "التذاكر ومواعيد العمل",
+          "href": "/visit"
+        },
+        {
+          "id": "learn",
+          "title": "التعلّم",
+          "text": "المدارس والمحاضرات",
+          "href": "/learn"
+        },
+        {
+          "id": "membership",
+          "title": "العضوية",
+          "text": "انضم إلى الطاقم",
+          "href": "/membership"
+        }
+      ]
+    },
+    "stages": [
+      {
+        "id": "start",
+        "label": "البداية",
+        "name": "ابقَ فضوليًا"
+      },
+      {
+        "id": "galleries",
+        "label": "القاعات",
+        "name": "سبع قاعات"
+      },
+      {
+        "id": "journey",
+        "label": "الرحلة",
+        "name": "من الانفجار العظيم حتى اليوم"
+      },
+      {
+        "id": "planetarium",
+        "label": "القبة السماوية",
+        "name": "تحت القبة"
+      },
+      {
+        "id": "exhibits",
+        "label": "المعروضات",
+        "name": "قطع مختارة"
+      },
+      {
+        "id": "visit",
+        "label": "الزيارة",
+        "name": "خطّط ليومك"
+      },
+      {
+        "id": "explore",
+        "label": "استكشف",
+        "name": "واصل الاستكشاف"
+      }
+    ]
+  }
+}

@@ -11,7 +11,8 @@ const handleI18nRouting = createIntlMiddleware(routing);
 // before launch. Add third-party origins (analytics, maps, video) here as they are agreed.
 const CSP = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  // Development only: React and Turbopack use eval() for fast refresh and debugging. Never in production.
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",

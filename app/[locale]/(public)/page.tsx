@@ -1,65 +1,76 @@
 import type { Metadata } from "next";
-import type { WebSite } from "schema-dts";
+import type { Museum, WebSite } from "schema-dts";
 import { getTranslations } from "next-intl/server";
-import { Container } from "@/components/ui/Container";
+import { HomeTemplate } from "@/components/templates/HomeTemplate";
+import { getHomePage } from "@/lib/api/home";
 import { getSiteSettings } from "@/lib/api/site-settings";
 import { resolveLocale } from "@/lib/i18n/locale";
-import type { Locale } from "@/lib/i18n/routing";
 import { JsonLd } from "@/lib/seo/JsonLd";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { siteUrl } from "@/lib/seo/site";
 
-// Scaffold home page: proves token → component → route → getPublic → MSW in every locale.
-// Replace with the real home template once its row is in the CLAUDE.md §2 route table.
-
-/** Settings, or null if the API fails — the page still renders (CLAUDE.md §2: every call has a fallback). */
-async function loadSettings(locale: Locale) {
-  try {
-    return await getSiteSettings(locale);
-  } catch (error) {
-    console.error("[home] site settings unavailable", error);
-    return null;
-  }
-}
+// Home (CLAUDE.md §2 route table): SSR, prerendered per locale; content from /pages/home (public, tag `home`).
 
 export async function generateMetadata({
   params,
 }: PageProps<"/[locale]">): Promise<Metadata> {
   const locale = resolveLocale((await params).locale);
-  const settings = await loadSettings(locale);
-  const t = await getTranslations({ locale, namespace: "Metadata" });
+  const [home, t] = await Promise.all([
+    getHomePage(locale).catch(() => null),
+    getTranslations({ locale, namespace: "Metadata" }),
+  ]);
   return buildMetadata({
     locale,
     path: "/",
-    title: settings?.siteName ?? t("siteName"),
-    description: settings?.tagline || t("description"),
+    title: home?.seo?.title ?? t("siteName"),
+    description: home?.seo?.description ?? t("description"),
+    // The home title already names the site ("Event Horizon — …") — no "| Event Horizon" suffix.
+    absoluteTitle: true,
   });
 }
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const locale = resolveLocale((await params).locale);
   const [settings, t] = await Promise.all([
-    loadSettings(locale),
-    getTranslations({ locale, namespace: "Home" }),
+    getSiteSettings(locale).catch(() => null),
+    getTranslations({ locale, namespace: "Metadata" }),
   ]);
 
+  const name = settings?.siteName ?? t("siteName");
+  const org = settings?.organization;
+  // One museum entity for the whole site (same @id in every locale); the WebSite points to it as publisher.
+  const museumId = `${siteUrl()}/#museum`;
+
   return (
-    <Container className="py-(--spacing-section-y)">
-      <h1 className="text-3xl font-bold">
-        {settings?.siteName ?? t("fallbackTitle")}
-      </h1>
-      {settings?.tagline ? (
-        <p className="mt-4 text-lg text-text-muted">{settings.tagline}</p>
-      ) : null}
+    <>
+      <HomeTemplate locale={locale} />
+      <JsonLd<Museum>
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Museum",
+          "@id": museumId,
+          name,
+          description: t("description"),
+          url: `${siteUrl()}/${locale}`,
+          // Only the details the API provides (lib/schemas/site-settings.ts) — never placeholders.
+          ...(org?.address && {
+            address: { "@type": "PostalAddress", ...org.address },
+          }),
+          ...(org?.telephone && { telephone: org.telephone }),
+          ...(org?.openingHours && { openingHours: org.openingHours }),
+          ...(org?.sameAs && { sameAs: org.sameAs }),
+        }}
+      />
       <JsonLd<WebSite>
         data={{
           "@context": "https://schema.org",
           "@type": "WebSite",
-          name: settings?.siteName ?? t("fallbackTitle"),
+          name,
           url: `${siteUrl()}/${locale}`,
           inLanguage: locale,
+          publisher: { "@id": museumId },
         }}
       />
-    </Container>
+    </>
   );
 }

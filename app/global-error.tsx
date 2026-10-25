@@ -22,15 +22,15 @@ export default function GlobalError({
   return (
     <html lang="en" dir="ltr">
       <body>
-        <main className={cn(CONTAINER_CLASSNAME, "py-(--spacing-section-y)")}>
-          <h1 className="text-3xl font-bold">Something went wrong</h1>
+        <main className={cn(CONTAINER_CLASSNAME, "py-24")}>
+          <h1 className="text-display font-bold">Something went wrong</h1>
           <p className="mt-4 text-lg" lang="ar" dir="rtl">
             حدث خطأ ما
           </p>
           <button
             type="button"
             onClick={reset}
-            className="mt-6 rounded-md bg-brand px-4 py-2 text-on-brand focus-ring"
+            className="mt-6 rounded-md bg-accent px-4 py-2 text-on-accent focus-ring"
           >
             Try again · <span lang="ar">حاول مرة أخرى</span>
           </button>

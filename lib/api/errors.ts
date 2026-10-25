@@ -1,6 +1,7 @@
 import "server-only";
 
-export type ApiErrorKind = "timeout" | "network" | "http" | "invalid-response" | "config";
+export type ApiErrorKind =
+  "timeout" | "network" | "http" | "invalid-response" | "config";
 
 /**
  * Typed API failure. `message` is for logs only — never render it; show a generic,

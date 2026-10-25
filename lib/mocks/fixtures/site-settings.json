@@ -1,0 +1,18 @@
+{
+  "en": {
+    "siteName": "Event Horizon",
+    "tagline": "Museum of space",
+    "announcement": {
+      "text": "Tonight: free rooftop stargazing with our astronomers — 40 telescope places",
+      "cta": { "label": "Book a place", "href": "/visit/stargazing" }
+    }
+  },
+  "ar": {
+    "siteName": "أفق الحدث",
+    "tagline": "متحف الفضاء",
+    "announcement": {
+      "text": "الليلة: رصد مجاني للنجوم على السطح مع علماء الفلك لدينا — 40 مكانًا عند التلسكوبات",
+      "cta": { "label": "احجز مكانك", "href": "/visit/stargazing" }
+    }
+  }
+}

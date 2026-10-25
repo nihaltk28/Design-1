@@ -7,11 +7,14 @@ export default async function NotFound() {
   const t = await getTranslations("NotFound");
 
   return (
-    <Container className="py-(--spacing-section-y)">
-      <h1 className="text-3xl font-bold">{t("title")}</h1>
+    <Container className="py-24">
+      <h1 className="text-display font-bold">{t("title")}</h1>
       <p className="mt-4 text-lg text-text-muted">{t("body")}</p>
       <p className="mt-6">
-        <Link href="/" className="rounded-sm text-brand underline focus-ring">
+        <Link
+          href="/"
+          className="rounded-sm text-accent-text underline focus-ring"
+        >
           {t("home")}
         </Link>
       </p>
