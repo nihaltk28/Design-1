@@ -3,11 +3,61 @@
     "skipToContent": "انتقل إلى المحتوى الرئيسي"
   },
   "Metadata": {
-    "siteName": "المتحف",
-    "description": "موقع إلكتروني عام وبوابة للزوار بلغتين"
+    "siteName": "أفق الحدث",
+    "description": "متحف للفضاء والزمن: سبع قاعات وقبة سماوية ومرصد عامل.",
+    "shareImageAlt": "أفق الحدث — ثقب أسود متوهّج بين حلقات المدارات"
+  },
+  "Header": {
+    "homeLink": "{name} — الصفحة الرئيسية",
+    "navLabel": "القائمة الرئيسية",
+    "menu": "القائمة",
+    "login": "دخول الأعضاء",
+    "switchLanguage": "English — التبديل إلى الإنجليزية",
+    "otherLanguageShort": "EN",
+    "theme": "تغيير ألوان الموقع",
+    "toLight": "التبديل إلى المظهر الفاتح",
+    "toDark": "التبديل إلى المظهر الداكن",
+    "nav": {
+      "groups": {
+        "exhibitions": "المعارض",
+        "visit": "الزيارة",
+        "learn": "التعلّم",
+        "membership": "العضوية",
+        "about": "من نحن"
+      },
+      "items": {
+        "galleries": "القاعات الدائمة",
+        "planetarium": "عروض القبة السماوية",
+        "temporary": "المعارض المؤقتة",
+        "tickets": "التذاكر ومواعيد العمل",
+        "gettingHere": "كيف تصل إلينا",
+        "accessibility": "إمكانية الوصول",
+        "schools": "المدارس",
+        "events": "المحاضرات والفعاليات",
+        "research": "الأبحاث",
+        "story": "قصتنا",
+        "press": "الصحافة",
+        "contact": "اتصل بنا"
+      }
+    }
+  },
+  "Announcement": {
+    "region": "إعلان",
+    "close": "إغلاق الإعلان"
   },
   "Home": {
-    "fallbackTitle": "أهلاً بكم"
+    "fallbackTitle": "أهلاً بكم",
+    "unavailable": "تعذّر تحميل هذه الصفحة حاليًا. يرجى المحاولة مرة أخرى بعد قليل.",
+    "stagesLabel": "مراحل الرحلة",
+    "stage": "المرحلة",
+    "progress": "التقدّم",
+    "places": "أين تجدها",
+    "scroll": "مرّر للغوص",
+    "compare": {
+      "yes": "مشمول",
+      "no": "غير مشمول",
+      "partial": "مشمول جزئيًا"
+    }
   },
   "NotFound": {
     "title": "الصفحة غير موجودة",

@@ -13,15 +13,28 @@ import { secretMatches } from "@/lib/security/secret";
 
 const MAX_BODY_BYTES = 4_096;
 const TAG = /^[a-z0-9][a-z0-9:_-]{0,63}$/;
-const BodySchema = z.object({ tags: z.array(z.string().regex(TAG)).min(1).max(50) });
+const BodySchema = z.object({
+  tags: z.array(z.string().regex(TAG)).min(1).max(50),
+});
 
 export async function POST(request: Request) {
-  const limit = rateLimit(`revalidate:${clientIp(request.headers)}`, { limit: 30, windowMs: 60_000 });
+  const limit = rateLimit(`revalidate:${clientIp(request.headers)}`, {
+    limit: 30,
+    windowMs: 60_000,
+  });
   if (!limit.ok) {
-    return new Response(null, { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } });
+    return new Response(null, {
+      status: 429,
+      headers: { "Retry-After": String(limit.retryAfterSeconds) },
+    });
   }
 
-  if (!secretMatches(request.headers.get("x-revalidate-secret"), process.env.REVALIDATE_SECRET)) {
+  if (
+    !secretMatches(
+      request.headers.get("x-revalidate-secret"),
+      process.env.REVALIDATE_SECRET,
+    )
+  ) {
     return new Response(null, { status: 401 });
   }
 
@@ -32,7 +45,8 @@ export async function POST(request: Request) {
   const declared = Number(request.headers.get("content-length") ?? 0);
   if (declared > MAX_BODY_BYTES) return new Response(null, { status: 413 });
   const raw = await request.text();
-  if (Buffer.byteLength(raw) > MAX_BODY_BYTES) return new Response(null, { status: 413 });
+  if (Buffer.byteLength(raw) > MAX_BODY_BYTES)
+    return new Response(null, { status: 413 });
 
   let json: unknown;
   try {

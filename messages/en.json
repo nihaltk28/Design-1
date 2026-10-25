@@ -3,11 +3,61 @@
     "skipToContent": "Skip to main content"
   },
   "Metadata": {
-    "siteName": "Museum",
-    "description": "Bilingual public website and visitor portal"
+    "siteName": "Event Horizon",
+    "description": "A museum of space and time: seven galleries, a planetarium and a working observatory.",
+    "shareImageAlt": "Event Horizon — a glowing black hole among orbit rings"
+  },
+  "Header": {
+    "homeLink": "{name} — home",
+    "navLabel": "Main",
+    "menu": "Menu",
+    "login": "Member login",
+    "switchLanguage": "العربية — switch to Arabic",
+    "otherLanguageShort": "ع",
+    "theme": "Change colour theme",
+    "toLight": "Switch to the light theme",
+    "toDark": "Switch to the dark theme",
+    "nav": {
+      "groups": {
+        "exhibitions": "Exhibitions",
+        "visit": "Visit",
+        "learn": "Learn",
+        "membership": "Membership",
+        "about": "About"
+      },
+      "items": {
+        "galleries": "Permanent galleries",
+        "planetarium": "Planetarium shows",
+        "temporary": "Temporary exhibitions",
+        "tickets": "Tickets & opening hours",
+        "gettingHere": "Getting here",
+        "accessibility": "Accessibility",
+        "schools": "Schools",
+        "events": "Talks & events",
+        "research": "Research",
+        "story": "Our story",
+        "press": "Press",
+        "contact": "Contact"
+      }
+    }
+  },
+  "Announcement": {
+    "region": "Announcement",
+    "close": "Close the announcement"
   },
   "Home": {
-    "fallbackTitle": "Welcome"
+    "fallbackTitle": "Welcome",
+    "unavailable": "This page couldn't be loaded right now. Please try again shortly.",
+    "stagesLabel": "Journey stages",
+    "stage": "Stage",
+    "progress": "Progress",
+    "places": "Where to see it",
+    "scroll": "Scroll to dive in",
+    "compare": {
+      "yes": "Included",
+      "no": "Not included",
+      "partial": "Partly included"
+    }
   },
   "NotFound": {
     "title": "Page not found",

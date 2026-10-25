@@ -15,14 +15,17 @@ const SESSION_COOKIE = "session";
 
 const USE_MOCKS = process.env.NEXT_PUBLIC_USE_MOCKS === "true";
 
-// MSW must be listening in every process that fetches — including `next build` prerender workers,
-// where instrumentation.ts register() does not run — so it's started here, once per process.
-let mocksReady: Promise<void> | undefined;
-function ensureMocks(): Promise<void> {
-  mocksReady ??= import("@/lib/mocks/server").then(({ server }) => {
-    server.listen({ onUnhandledRequest: "bypass" });
-  });
-  return mocksReady;
+/**
+ * fetch, except that with NEXT_PUBLIC_USE_MOCKS=true a request the MSW handlers know is answered by them
+ * (lib/mocks/server.ts) — in every process, including `next build` workers. Anything else goes to the network.
+ */
+async function send(url: string, init: RequestInit): Promise<Response> {
+  if (USE_MOCKS) {
+    const { mockResponse } = await import("@/lib/mocks/server");
+    const mocked = await mockResponse(url, init);
+    if (mocked) return mocked;
+  }
+  return fetch(url, init);
 }
 
 function baseUrl(path: string): string {
@@ -45,30 +48,45 @@ function buildUrl(path: string): string {
 async function request<T extends z.ZodType>(
   path: string,
   schema: T,
-  init: RequestInit & { next?: { tags?: string[]; revalidate?: number | false } },
+  init: RequestInit & {
+    next?: { tags?: string[]; revalidate?: number | false };
+  },
   timeoutMs: number,
 ): Promise<z.infer<T>> {
-  if (USE_MOCKS) await ensureMocks();
   let response: Response;
   try {
-    response = await fetch(buildUrl(path), {
+    response = await send(buildUrl(path), {
       ...init,
       headers: { Accept: "application/json", ...init.headers },
       signal: AbortSignal.timeout(timeoutMs),
     });
   } catch (error) {
     if (error instanceof ApiError) throw error;
-    const timedOut = error instanceof DOMException && error.name === "TimeoutError";
-    throw new ApiError(timedOut ? "timeout" : "network", path, `${path}: ${String(error)}`);
+    const timedOut =
+      error instanceof DOMException && error.name === "TimeoutError";
+    throw new ApiError(
+      timedOut ? "timeout" : "network",
+      path,
+      `${path}: ${String(error)}`,
+    );
   }
 
   if (!response.ok) {
-    throw new ApiError("http", path, `${path}: HTTP ${response.status}`, response.status);
+    throw new ApiError(
+      "http",
+      path,
+      `${path}: HTTP ${response.status}`,
+      response.status,
+    );
   }
 
   const parsed = schema.safeParse(await response.json().catch(() => undefined));
   if (!parsed.success) {
-    throw new ApiError("invalid-response", path, `${path}: response failed validation — ${parsed.error.message}`);
+    throw new ApiError(
+      "invalid-response",
+      path,
+      `${path}: response failed validation — ${parsed.error.message}`,
+    );
   }
   return parsed.data;
 }
@@ -83,7 +101,10 @@ type PublicOptions<T extends z.ZodType> = {
 };
 
 /** Data identical for every visitor. Cached and shared across requests. Never pass per-user data here. */
-export function getPublic<T extends z.ZodType>(path: string, options: PublicOptions<T>) {
+export function getPublic<T extends z.ZodType>(
+  path: string,
+  options: PublicOptions<T>,
+) {
   const { schema, tags, revalidate, timeoutMs = DEFAULT_TIMEOUT_MS } = options;
   return request(path, schema, { next: { tags, revalidate } }, timeoutMs);
 }
@@ -91,7 +112,10 @@ export function getPublic<T extends z.ZodType>(path: string, options: PublicOpti
 type PrivateOptions<T extends z.ZodType> = { schema: T; timeoutMs?: number };
 
 /** Per-user or per-request data. Never cached; forwards the session cookie. */
-export async function getPrivate<T extends z.ZodType>(path: string, options: PrivateOptions<T>) {
+export async function getPrivate<T extends z.ZodType>(
+  path: string,
+  options: PrivateOptions<T>,
+) {
   const { schema, timeoutMs = DEFAULT_TIMEOUT_MS } = options;
   const session = (await cookies()).get(SESSION_COOKIE)?.value;
   return request(

@@ -1,13 +1,15 @@
 /*
  * Laptop scaling (CLAUDE.md §7). Windows / macOS display scaling makes the browser viewport narrower:
  * a 1920 px laptop screen at 125% reports 1536 CSS px, at 150% 1280, at 175% ~1097, at 200% 960.
- * Fixed sizes from a 1920 design then look oversized. Instead of a media query per screen, the root
- * font size scales between 1280 and 1920 px wide — and because Tailwind v4 sizes text, spacing and
- * gaps in rem, everything built from utilities and rem tokens follows with this one rule.
+ * Fixed sizes from a design then look oversized. Instead of a media query per screen, the root
+ * font size scales with the viewport — and because Tailwind v4 sizes text, spacing and gaps in rem,
+ * everything built from utilities and rem tokens follows with this one rule.
  *
- *   ≥ 1920 px wide → 16 px root (the design, 1:1)
- *     1536 px      → ~14.2 px
- *   1024–1280 px   → 13 px (floor — never smaller, so body text stays readable)
+ * This design is laid out at 1440 px, so the range ends there:
+ *
+ *   ≥ 1440 px wide → 16 px root (the design, 1:1)
+ *     1280 px      → 15 px
+ *     1024 px      → ~13.4 px
  *   < 1024 px      → 100% (phones, tablets, and 200% scaling get the normal-size layout)
  *
  * Accessibility: the min / max are rem, i.e. relative to the user's browser font-size setting, and
@@ -15,8 +17,7 @@
  * or devicePixelRatio tricks (WCAG 1.4.4 / 1.4.10, Mada). Media queries in rem/em are unaffected:
  * they use the browser's initial font size, not this one.
  *
- * Change the range per project only if the design's frames differ (e.g. a 1440 px laptop frame):
- *   pnpm token:clamp 13 16 1280 1920
+ * Generated with: pnpm token:clamp 13 16 960 1440 (the template's 1920 frame used 13 16 1280 1920)
  */
 html {
   font-size: 100%;
@@ -24,7 +25,7 @@ html {
 
 @media (min-width: 64rem) {
   html {
-    /* 13px @1280 → 16px @1920 */
-    font-size: clamp(0.8125rem, 0.4375rem + 0.46875vw, 1rem);
+    /* 13px @960 → 16px @1440 */
+    font-size: clamp(0.8125rem, 0.4375rem + 0.625vw, 1rem);
   }
 }

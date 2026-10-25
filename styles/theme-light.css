@@ -1,0 +1,77 @@
+/*
+ * Light theme — overrides the dark colours in styles/tokens.css. Used when the visitor's system is light, unless
+ * they chose dark with the theme switch, and whenever they chose light (data-theme on <html>, set by
+ * components/sections/site-header/ThemeToggle.tsx). Every colour pair is checked in styles/contrast.test.ts.
+ *
+ * Keep the two blocks below identical.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-page: #f7fdfd;
+    --color-text: #06232a;
+    --color-text-muted: #4f6b72;
+    --color-accent: #0f766e;
+    --color-accent-text: #0f766e;
+    --color-accent-2: #0369a1;
+    --color-accent-2-text: #0369a1;
+    --color-on-accent: #ffffff;
+    --color-surface: #ffffff;
+    --color-surface-raised: #eefafa;
+    --color-border: #d5ecee;
+    --color-border-strong: #6f9097;
+    --color-orbit: #cdeef0;
+    --color-focus-ring: #0f766e;
+    --color-glow: #22d3ee; /* the shader darkens it to ink (--hole-ink below) */
+    --color-glow-2: #2dd4bf;
+  }
+}
+
+:root[data-theme="light"] {
+  --color-page: #f7fdfd;
+  --color-text: #06232a;
+  --color-text-muted: #4f6b72;
+  --color-accent: #0f766e;
+  --color-accent-text: #0f766e;
+  --color-accent-2: #0369a1;
+  --color-accent-2-text: #0369a1;
+  --color-on-accent: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-raised: #eefafa;
+  --color-border: #d5ecee;
+  --color-border-strong: #6f9097;
+  --color-orbit: #cdeef0;
+  --color-focus-ring: #0f766e;
+  --color-glow: #22d3ee; /* the shader darkens it to ink (--hole-ink below) */
+  --color-glow-2: #2dd4bf;
+}
+
+/* The black hole: the shader draws a dark-ink version for the light theme (--hole-ink, read by
+   components/sections/home/BlackHole.tsx) — dark glow on a transparent canvas, multiplied into the page. (Not a
+   CSS invert(): with the scroll blur, Chrome turns the canvas's transparent pixels white.) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --hole-ink: 1;
+  }
+  :root:not([data-theme="dark"]) .hole {
+    mix-blend-mode: multiply;
+  }
+  :root:not([data-theme="dark"]) .hole-still-dark {
+    display: none;
+  }
+  :root:not([data-theme="dark"]) .hole-still-light {
+    display: block;
+  }
+}
+
+:root[data-theme="light"] {
+  --hole-ink: 1;
+}
+:root[data-theme="light"] .hole {
+  mix-blend-mode: multiply;
+}
+:root[data-theme="light"] .hole-still-dark {
+  display: none;
+}
+:root[data-theme="light"] .hole-still-light {
+  display: block;
+}

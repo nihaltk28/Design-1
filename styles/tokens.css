@@ -1,56 +1,160 @@
 /*
  * Design tokens — Tailwind v4 @theme (CLAUDE.md §1, §3).
  *
- * ⚠ PLACEHOLDER VALUES. Every value below is a neutral stand-in so the scaffold builds and passes the
- * contrast gate. Replace them with the design's tokens (Figma / brand guide) before page work; values
- * estimated from screenshots get an "estimated from screenshot" comment (CLAUDE.md §7).
- * Every colour pair the design uses becomes a row in styles/contrast.test.ts.
+ * Reference: the look and motion of orizon.one (studied 2026-10-20) rebuilt as our own brand — the Event Horizon
+ * space museum, in a teal → sky-blue "Aurora" palette instead of the reference's green. Values estimated from the reference page at
+ * 1440 px; confirm with the designer. These are the DARK theme (the default); styles/theme-light.css overrides the
+ * colours for the light theme. Every colour pair is a row in styles/contrast.test.ts, checked in both themes.
  *
  * Fluid sizes: generate clamp() values with `pnpm token:clamp <minPx> <maxPx> <minVw> <maxVw> --name=--token`.
  */
 @theme {
-  /* Colours — placeholder */
-  --color-text: #1a1a1a;
-  --color-text-muted: #595959;
-  --color-surface: #ffffff;
-  --color-brand: #1d4e89;
-  --color-on-brand: #ffffff;
-  --color-focus-ring: #1d4e89;
+  /* Colours — dark theme ("Aurora teal") */
+  --color-page: #020b10; /* blue-black, behind the starfield */
+  --color-text: #eafcff; /* icy white */
+  --color-text-muted: #8fb3bd; /* lead paragraph, nav labels at rest */
+  --color-accent: #2dd4bf; /* teal — buttons, highlighted words, active HUD item, the black hole */
+  --color-accent-text: #2dd4bf; /* the accent as text on the page */
+  --color-accent-2: #38bdf8; /* sky blue — the glow's outer edge, gradient ends */
+  --color-accent-2-text: #38bdf8; /* sky blue as text (the end of a gradient highlight) */
+  --color-on-accent: #02161a; /* text on an accent fill */
+  --color-surface: #071820; /* header, announcement bar, menus, cards */
+  --color-surface-raised: #0d2530; /* ghost buttons, the language pill */
+  --color-border: #16323d; /* hairlines: header and bar bottoms */
+  --color-border-strong: #4f7f8c; /* ghost-button outline — 3:1 on the page */
+  --color-orbit: #123a44; /* decorative orbit rings */
+  --color-focus-ring: #5eead4;
+  --color-glow: #2dd4bf; /* the black hole's ring and inner glow (shader, hex only) */
+  --color-glow-2: #38bdf8; /* … its outer glow and disk */
 
-  /* Typography — placeholder family until lib/fonts.ts loads the brand font */
+  /* Typography */
   --font-brand: var(--font-brand-local, system-ui), system-ui, sans-serif;
+  --font-mono:
+    var(--font-mono-local, ui-monospace), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
   --default-font-family: var(--font-brand);
 
-  /* Type scale (rem — follows styles/scaling.css) — placeholder */
+  /* Type scale (rem — follows styles/scaling.css; 1440 frame) */
+  --text-micro: 0.625rem; /* 10px — HUD and readout */
+  --text-micro--line-height: 1.6;
+  --text-label: 0.75rem; /* 12px — eyebrows and button labels (mono, uppercase, spaced) */
+  --text-label--line-height: 1.5;
   --text-sm: 0.875rem;
   --text-sm--line-height: 1.5;
   --text-base: 1rem;
-  --text-base--line-height: 1.6;
-  --text-lg: 1.25rem;
-  --text-lg--line-height: 1.5;
-  --text-xl: 1.5rem;
-  --text-xl--line-height: 1.35;
-  --text-2xl: 2rem;
-  --text-2xl--line-height: 1.25;
-  --text-3xl: 2.5rem;
-  --text-3xl--line-height: 1.2;
+  --text-base--line-height: 1.5;
+  --text-nav: 0.9375rem; /* 15px — header nav */
+  --text-nav--line-height: 1.4;
+  --text-lead: clamp(
+    0.9375rem,
+    0.8911rem + 0.2321vw,
+    1.1rem
+  ); /* 15px @320 → 17.6px @1440 */
+  --text-lead--line-height: 1.55;
+  --text-display: clamp(
+    2.5rem,
+    2.0179rem + 2.4107vw,
+    4.1875rem
+  ); /* 40px @320 → 67px @1440 — the hero headline */
+  --text-heading: clamp(
+    1.875rem,
+    1.4821rem + 1.9643vw,
+    3.25rem
+  ); /* 30px @320 → 52px @1440 — stage headings */
+  --text-heading--line-height: 1.08;
+  --text-heading--letter-spacing: -0.03em;
+  --text-tagline: clamp(
+    1.25rem,
+    1.0714rem + 0.8929vw,
+    1.875rem
+  ); /* 20px @320 → 30px @1440 — the statement under each stage */
+  --text-tagline--line-height: 1.3;
+  --text-tagline--letter-spacing: -0.02em;
+  --text-card-title: clamp(
+    1.25rem,
+    1.1786rem + 0.3571vw,
+    1.5rem
+  ); /* 20px @320 → 24px @1440 — the gallery cards */
+  --text-card-title--line-height: 1.2;
+  --text-display--line-height: 1.04;
+  --text-display--letter-spacing: -0.03em;
 
-  /* Spacing — Tailwind's 0.25rem step; named page-level tokens below */
+  /* Letter spacing for the mono labels */
+  --tracking-label: 0.18em;
+  --tracking-eyebrow: 0.42em;
+
+  /* Spacing */
   --spacing: 0.25rem;
-  --spacing-section-y: 3rem;
 
-  /* Radii — placeholder */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
+  /* Sizes */
+  --size-header: clamp(
+    3.5rem,
+    3.0714rem + 2.1429vw,
+    5rem
+  ); /* 56px @320 → 80px @1440 */
+  --size-bar: 3.5rem; /* announcement bar */
+  --size-cta-w: 15rem; /* hero buttons, 240 × 48 */
+  --size-cta-h: 3rem;
+  --size-icon-button: 2.25rem;
+  --size-hole: min(
+    108vw,
+    72rem
+  ); /* the black-hole canvas (its glow reaches far sideways) */
+  --size-first-screen: calc(
+    100svh - var(--size-header) - var(--size-bar)
+  ); /* the hero's first screen, under the header and the bar */
+  --size-gallery-card: 16.25rem; /* stage 2 cards, 260 wide */
+  --size-gallery-span: 67.5rem; /* outer edge to outer edge of the two card columns */
+  --size-mini-visual: 8.75rem; /* the small graphic inside a card */
+  --size-journey: 72rem; /* stage 3 content — narrow enough to clear the side menu at 1440 */
+  --size-step-card: 11.75rem; /* stage 3 step cards (desktop min height) */
+  --size-place-row: 5.5rem; /* stage 3 place tiles row */
+
+  /* The cards' inner edge is cut along an orbit ring around the black hole: the circle's radius and its centre,
+     measured from the card's inner edge and middle (stage 2, top-row cards; the bottom row mirrors y). */
+  --cut-radius: 21.875rem;
+  --cut-offset-x: 17.5rem;
+  --cut-offset-y: 9.25rem;
+  --cut-line: color-mix(
+    in oklab,
+    var(--color-accent-text) 25%,
+    transparent
+  ); /* the line along a cut edge — same as the cut cards' border */
+  /* Stage 7 (explore): three link cards either side of the black hole, measured at 1440. */
+  --size-explore-card: 13rem; /* 210 wide */
+  --size-explore-row: 4.25rem; /* 68 tall */
+  --size-explore-gap: 33.75rem; /* 540 between the two columns' inner edges */
+  --explore-cut-radius: 18.25rem; /* the ring that cuts the cards' inner edges */
+  --explore-cut-dx: 16.875rem; /* card inner edge → ring centre */
+  --explore-cut-dy-1: 10.5rem; /* card centre → ring centre, per row */
+  --explore-cut-dy-2: 3.75rem;
+  --explore-cut-dy-3: -3rem;
+
+  /* Radii */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem; /* gallery cards */
+  --radius-pill: 9999px;
+
+  /* Shadows / glows */
+  --shadow-glow: 0 0 2.5rem -0.5rem var(--color-accent); /* the accent button's glow */
+  --shadow-glow-strong: 0 0 3.5rem -0.25rem var(--color-accent); /* … on hover */
+  --drop-shadow-glow: 0 0 0.375rem var(--color-accent); /* stage 5 connector lines */
 
   /* Focus ring — one token set, consumed through the focus-ring utility (CLAUDE.md §4). px: hairline */
-  --focus-ring-width: 3px;
-  --focus-ring-offset: 2px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
 
   /* Container — the only place the page width lives (CLAUDE.md §7) */
   --container-max-w: 90rem;
-  --container-gutter: 1rem;
+  --container-gutter: clamp(
+    1rem,
+    0.8571rem + 0.7143vw,
+    1.5rem
+  ); /* 16px @320 → 24px @1440 */
+
+  /* Hard collapse point: full nav from here up, menu button below. */
+  --breakpoint-nav: 64rem;
 }
 
 /* Visible keyboard focus. Use `focus-ring` on every interactive primitive — never outline-none. */
@@ -58,5 +162,228 @@
   &:focus-visible {
     outline: var(--focus-ring-width) solid var(--color-focus-ring);
     outline-offset: var(--focus-ring-offset);
+  }
+}
+
+/* Spaced, uppercase monospace labels — eyebrows, button labels, the HUD. */
+@utility mono-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+}
+
+/* The black-hole canvas: blurred by the scroll position (--hole-blur, set by HeroStage). "screen" drops its black
+   background, so the stars and orbits show through; the light theme draws it as dark ink and multiplies instead
+   (styles/theme-light.css). */
+@utility hole {
+  filter: blur(var(--hole-blur, 0px));
+  mix-blend-mode: screen;
+}
+
+/* Motion — transform / opacity only; switched off by prefers-reduced-motion in app/globals.css. */
+@theme {
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both; /* hero text arriving */
+  --animate-drift: drift 16s ease-in-out infinite; /* floating dust */
+  --animate-cue: cue 2.4s ease-in-out infinite; /* the "scroll" line */
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0.75rem, -1.25rem, 0);
+  }
+}
+
+@keyframes cue {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Stage 2 cards: cut away where an orbit ring passes (design detail). The class says which side of the hole the
+   card is on (start / end) and which row (top / bottom); RTL swaps the sides. */
+@utility card-cut {
+  position: relative;
+  mask-image: radial-gradient(
+    circle var(--cut-radius) at var(--cut-x) var(--cut-y),
+    transparent 99.6%,
+    #000 100%
+  );
+  /* The mask cuts the card's border away along the curve, so the curve gets its own 1px line, in the cards'
+     border colour (--cut-line). The overlay covers the border box (inset −1px), like the mask. */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      circle var(--cut-radius) at var(--cut-x) var(--cut-y),
+      transparent 100%,
+      var(--cut-line) 100%,
+      var(--cut-line) calc(100% + 1px),
+      transparent calc(100% + 1px)
+    );
+  }
+}
+@utility cut-start-top {
+  --cut-x: calc(100% + var(--cut-offset-x));
+  --cut-y: calc(50% + var(--cut-offset-y));
+  &:where([dir="rtl"] *) {
+    --cut-x: calc(0% - var(--cut-offset-x));
+  }
+}
+@utility cut-start-bottom {
+  --cut-x: calc(100% + var(--cut-offset-x));
+  --cut-y: calc(50% - var(--cut-offset-y));
+  &:where([dir="rtl"] *) {
+    --cut-x: calc(0% - var(--cut-offset-x));
+  }
+}
+@utility cut-end-top {
+  --cut-x: calc(0% - var(--cut-offset-x));
+  --cut-y: calc(50% + var(--cut-offset-y));
+  &:where([dir="rtl"] *) {
+    --cut-x: calc(100% + var(--cut-offset-x));
+  }
+}
+@utility cut-end-bottom {
+  --cut-x: calc(0% - var(--cut-offset-x));
+  --cut-y: calc(50% - var(--cut-offset-y));
+  &:where([dir="rtl"] *) {
+    --cut-x: calc(100% + var(--cut-offset-x));
+  }
+}
+
+/* Stage 7 cards: like cut-start-* / cut-end-*, with the explore ring's own size and one centre per row. */
+@utility explore-cut-start {
+  --cut-radius: var(--explore-cut-radius);
+  --cut-x: calc(100% + var(--explore-cut-dx));
+  &:where([dir="rtl"] *) {
+    --cut-x: calc(0% - var(--explore-cut-dx));
+  }
+}
+@utility explore-cut-end {
+  --cut-radius: var(--explore-cut-radius);
+  --cut-x: calc(0% - var(--explore-cut-dx));
+  &:where([dir="rtl"] *) {
+    --cut-x: calc(100% + var(--explore-cut-dx));
+  }
+}
+@utility explore-cut-row-1 {
+  --cut-y: calc(50% + var(--explore-cut-dy-1));
+}
+@utility explore-cut-row-2 {
+  --cut-y: calc(50% + var(--explore-cut-dy-2));
+}
+@utility explore-cut-row-3 {
+  --cut-y: calc(50% + var(--explore-cut-dy-3));
+}
+
+/* The dive at the end of the journey: the black hole's light floods the screen, crossed by a pale band (its
+   disk, seen from inside). Decoration only. */
+@utility dive-flood {
+  background: radial-gradient(
+    ellipse closest-side at 50% 50%,
+    color-mix(in oklab, var(--color-accent) 50%, white) 0%,
+    var(--color-accent) 35%,
+    color-mix(in oklab, var(--color-accent-2) 55%, transparent) 70%,
+    transparent 100%
+  );
+}
+@utility dive-band {
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    color-mix(in oklab, white 45%, transparent) 50%,
+    transparent 70%
+  );
+  filter: blur(2.5rem);
+}
+
+/* Highlighted words: a teal → sky-blue gradient across the text. Both ends pass 4.5:1 on the page
+   (contrast.test.ts). Forced-colours mode drops the gradient and shows the system text colour. */
+@utility text-gradient {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-accent-text),
+    var(--color-accent-2-text)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  @media (forced-colors: active) {
+    background-image: none;
+    color: CanvasText;
+  }
+}
+
+/* The main button's fill: teal → sky blue. Its label (--color-on-accent) passes on both ends. */
+@utility gradient-accent {
+  background-image: linear-gradient(
+    100deg,
+    var(--color-accent),
+    var(--color-accent-2)
+  );
+}
+
+/* The black hole's still images (HeroJourney): the dark one by default; theme-light.css swaps them. */
+.hole-still-light {
+  display: none;
+}
+
+/* Lite mode (phones, tablets — components/sections/home/lite.ts): stage content fades up as it comes on screen.
+   HeroJourney sets data-journey="lite" and marks each element data-shown. Reduced motion: no transition
+   (app/globals.css). */
+[data-journey="lite"] [data-anim] {
+  transition:
+    opacity 0.6s ease-out,
+    translate 0.6s ease-out;
+}
+[data-journey="lite"] [data-anim]:not([data-shown]) {
+  opacity: 0;
+  translate: 0 1.5rem;
+}
+
+/* The announcement bar the visitor closed this session: hidden before the first paint by the layout's inline
+   script (components/sections/site-header/announcement.ts), so the page doesn't jump when React removes it. */
+[data-announcement-dismissed] [data-announcement] {
+  display: none;
+}
+
+/* SvgIcon (components/ui/SvgIcon.tsx): an .svg file used as a mask and painted in the current text colour, so
+   icons follow the theme. In Windows high-contrast mode backgrounds are replaced, so paint it in the system text
+   colour there instead of losing it. */
+@utility svg-icon {
+  background-color: currentColor;
+  mask-image: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 100% 100%;
+  @media (forced-colors: active) {
+    forced-color-adjust: none;
+    background-color: CanvasText;
   }
 }

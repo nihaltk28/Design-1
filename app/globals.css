@@ -1,12 +1,32 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
+@import "../styles/theme-light.css";
 @import "../styles/scaling.css";
 
 @layer base {
+  :root {
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+
   body {
-    background-color: var(--color-surface);
+    min-height: 100dvh;
+    background-color: var(--color-page);
     color: var(--color-text);
     font-family: var(--font-brand);
+  }
+
+  /* Arabic letters join: any letter spacing (the spaced labels, the tight headline) breaks the words apart.
+     !important so no utility class can put it back on Arabic text. */
+  :lang(ar) {
+    letter-spacing: normal !important;
   }
 
   /* Fallback for anything that doesn't use the focus-ring utility yet. */

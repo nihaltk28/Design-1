@@ -6,7 +6,8 @@ import "server-only";
 //     limit × instances. Use the CDN / WAF rate limiting, or swap the Map for a shared store (Redis,
 //     Upstash, a KV) behind the same `rateLimit()` signature. Decide per project (PROJECT-SETUP §11).
 
-export type RateLimitResult = { ok: true; remaining: number } | { ok: false; retryAfterSeconds: number };
+export type RateLimitResult =
+  { ok: true; remaining: number } | { ok: false; retryAfterSeconds: number };
 
 type Bucket = { count: number; resetAt: number };
 
@@ -27,7 +28,10 @@ export function rateLimit(
   }
 
   if (bucket.count >= limit) {
-    return { ok: false, retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000)) };
+    return {
+      ok: false,
+      retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000)),
+    };
   }
 
   bucket.count += 1;
@@ -36,7 +40,8 @@ export function rateLimit(
 
 /** Drop expired buckets; if still full, drop the oldest so memory stays bounded. */
 function prune(now: number) {
-  for (const [key, bucket] of buckets) if (bucket.resetAt <= now) buckets.delete(key);
+  for (const [key, bucket] of buckets)
+    if (bucket.resetAt <= now) buckets.delete(key);
   while (buckets.size >= MAX_KEYS) {
     const oldest = buckets.keys().next().value;
     if (oldest === undefined) break;
@@ -49,7 +54,11 @@ function prune(now: number) {
  * a client can send its own X-Forwarded-For, so the platform must overwrite it.
  */
 export function clientIp(headers: Headers): string {
-  return headers.get("x-forwarded-for")?.split(",")[0]?.trim() || headers.get("x-real-ip")?.trim() || "unknown";
+  return (
+    headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    headers.get("x-real-ip")?.trim() ||
+    "unknown"
+  );
 }
 
 /** Test helper: clear all counts. */
