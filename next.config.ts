@@ -19,6 +19,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   // Stop `next dev` injecting its agent-rules block into our CLAUDE.md / creating AGENTS.md.
   agentRules: false,
+  experimental: {
+    agentUpgrade: "security",
+  },
   // Old site URL → new URL map (redirects.ts) — this project replaces an existing site (CLAUDE.md "Project").
   async redirects() {
     return redirects;
