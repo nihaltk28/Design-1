@@ -1,3 +1,4 @@
+// @vitest-environment node
 // Token contrast gate (CLAUDE.md §4): 4.5:1 body text, 3:1 large text and UI boundaries (focus ring, borders
 // that identify a control, indicators). A failing pair is a design issue — raise it with the designer,
 // don't nudge the hex.
@@ -21,10 +22,18 @@ const PAIRS: [string, string, number][] = [
   ["--color-focus-ring", "--color-surface", LARGE_OR_UI],
 ];
 
-const css = readFileSync(path.join(process.cwd(), "styles/tokens.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+const css = readFileSync(
+  path.join(process.cwd(), "styles/tokens.css"),
+  "utf8",
+).replace(/\/\*[\s\S]*?\*\//g, "");
 
 // Last declaration wins, like the cascade (light values only — add a dark-theme table if the project has one).
-const tokens = new Map([...css.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [name, value.trim()]));
+const tokens = new Map(
+  [...css.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, name, value]) => [
+    name,
+    value.trim(),
+  ]),
+);
 
 function resolve(name: string, seen = new Set<string>()): string | undefined {
   const value = tokens.get(name);
@@ -50,6 +59,9 @@ describe("token contrast", () => {
     expect(bgColor!.alpha ?? 1, `${bg} is translucent`).toBe(1);
 
     const ratio = Math.round(wcagContrast(fgColor!, bgColor!) * 100) / 100;
-    expect(ratio, `${fg} (${fgValue}) on ${bg} (${bgValue})`).toBeGreaterThanOrEqual(min);
+    expect(
+      ratio,
+      `${fg} (${fgValue}) on ${bg} (${bgValue})`,
+    ).toBeGreaterThanOrEqual(min);
   });
 });
